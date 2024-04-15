@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <TextView
         android:id="@+id/author"
@@ -14,13 +14,13 @@
         android:layout_marginStart="16dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="@string/author"
         app:layout_constraintBottom_toTopOf="@+id/published"
         app:layout_constraintEnd_toEndOf="@+id/published"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="@+id/avatar"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@string/author" />
 
     <TextView
         android:id="@+id/published"
@@ -28,7 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/published"
         app:layout_constraintBottom_toBottomOf="@id/barrier"
         app:layout_constraintEnd_toStartOf="@+id/menu"
         app:layout_constraintStart_toEndOf="@id/avatar"
@@ -68,13 +67,12 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:autoLink="web"
-        android:text="@string/content"
         app:layout_constraintBottom_toTopOf="@id/barrier1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier"
-        tools:text="@sample/posts.json/data/content" />
+        tools:text="@string/content" />
 
     <ImageView
         android:id="@+id/avatar"
@@ -146,28 +144,29 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/like"
         app:layout_constraintStart_toEndOf="@+id/like"
-        app:layout_constraintTop_toTopOf="@+id/like" />
+        app:layout_constraintTop_toTopOf="@+id/like"
+        tools:text="999" />
 
     <TextView
         android:id="@+id/shareCount"
         android:layout_width="36dp"
         android:layout_height="wrap_content"
-        android:text="@string/_5"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/share"
         app:layout_constraintStart_toEndOf="@+id/share"
-        app:layout_constraintTop_toTopOf="@+id/share" />
+        app:layout_constraintTop_toTopOf="@+id/share"
+        tools:text="999" />
 
     <TextView
         android:id="@+id/vievCount"
         android:layout_width="36dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
-        android:text="@string/_6"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+        app:layout_constraintTop_toTopOf="@+id/view"
+        tools:text="999" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
