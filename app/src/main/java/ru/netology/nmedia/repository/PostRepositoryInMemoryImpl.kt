@@ -78,28 +78,36 @@ class PostRepositoryInMemoryImpl : PostRepository {
             if (it.id != id) it else it.copy(
                 likedByMe = !it.likedByMe,
                 likes = if (it.likedByMe) {
-                it.likes - 1
-            } else {
-                it.likes + 1
-            })
+                    it.likes - 1
+                } else {
+                    it.likes + 1
+                }
+            )
         }
         data.value = posts
     }
 
-//    override fun share() {
-//        val localSharesCount = post.share
-//        post = post.copy(share = localSharesCount + 1)
-//        data.value = post
-//    }
+    override fun shareById(id: Long) {
+        posts = posts.map {
+            if (it.id != id) it else it.copy(share = 1 + it.share)
+        }
+        data.value = posts
+    }
 }
+
 object Calc {
     fun converter(value: Int): String {
-        val convertedValue = when(value) {
-            in 0 .. 999 -> "$value"
-            in 1000 .. 1099 -> "${(value/1000)}K"
-            in 1100 .. 9999 -> "${String.format("%.1f", value.toDouble()/1000)}K"
-            in 10000 .. 999999 -> "${(value/1000)}K"
-            else -> if (value > 0) "${String.format("%.1f", value.toDouble()/1_000_000)}М" else "Negative"
+        val convertedValue = when (value) {
+            in 0..999 -> "$value"
+            in 1000..1099 -> "${(value / 1000)}K"
+            in 1100..9999 -> "${String.format("%.1f", value.toDouble() / 1000)}K"
+            in 10000..999999 -> "${(value / 1000)}K"
+            else -> if (value > 0) "${
+                String.format(
+                    "%.1f",
+                    value.toDouble() / 1_000_000
+                )
+            }М" else "Negative"
         }
         return convertedValue
     }
