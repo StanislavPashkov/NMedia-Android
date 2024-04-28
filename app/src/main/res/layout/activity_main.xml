@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
+    android:padding="12dp"
     tools:context=".activity.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -13,7 +13,10 @@
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/toolsTop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/card_post" />
 
     <androidx.constraintlayout.widget.Barrier
@@ -94,7 +97,7 @@
         android:hint="@string/post_text"
         android:importantForAutofill="no"
         android:inputType="textMultiLine"
-        android:maxLines="6"
+        android:maxLines="4"
         android:minHeight="48dp"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"

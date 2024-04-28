@@ -12,6 +12,7 @@ private val empty = Post(
     content = "",
     author = "",
     likedByMe = false,
+    likes = 0,
     published = ""
 )
 
@@ -25,9 +26,6 @@ class PostViewModel : ViewModel() {
     fun removeById(id: Long) = repository.removeById(id)
     fun edit(post: Post) {
         edited.value = post
-    }
-    fun setEmptyPost() {
-        edited.value = empty
     }
 
     fun changeContentAndSave(text: String) {
