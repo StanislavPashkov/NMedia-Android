@@ -3,6 +3,7 @@ package ru.netology.nmedia.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.util.getTime
 
 class PostRepositoryInMemoryImpl : PostRepository {
     private var nextId = 1L
@@ -104,7 +105,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
                     id = nextId++,
                     author = "Me",
                     likedByMe = false,
-                    published = "now"
+                    published = getTime()
                 )
             ) + posts
         } else {

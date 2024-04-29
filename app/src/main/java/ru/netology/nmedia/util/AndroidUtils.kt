@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
+import java.util.Date
+import java.util.Locale
 
 object AndroidUtils {
     fun hideKeyboard(view: View) {
@@ -47,3 +49,5 @@ fun View.focusAndShowKeyboard() {
             })
     }
 }
+fun getTime(): String =
+    android.icu.text.SimpleDateFormat("dd MMMM в HH:mm", Locale.getDefault()).format(Date())
