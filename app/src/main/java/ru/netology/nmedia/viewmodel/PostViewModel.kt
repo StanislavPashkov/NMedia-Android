@@ -13,7 +13,9 @@ private val empty = Post(
     author = "",
     likedByMe = false,
     likes = 0,
-    published = ""
+    published = "",
+    videoURL = "",
+
 )
 
 class PostViewModel : ViewModel() {
@@ -27,6 +29,7 @@ class PostViewModel : ViewModel() {
     fun edit(post: Post) {
         edited.value = post
     }
+    fun playMedia(id: Long) = repository.playMedia(id)
 
     fun changeContentAndSave(text: String) {
         edited.value?.let {

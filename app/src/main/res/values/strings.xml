@@ -19,5 +19,7 @@
     <string name="s5" translatable="false">5</string>
     <string name="_6" translatable="false">1k</string>
     <string name="edit_message">Edit message</string>
+    <string name="chooser_share_post">Share post</string>
+    <string name="add_post">Add post</string>
 
 </resources>
