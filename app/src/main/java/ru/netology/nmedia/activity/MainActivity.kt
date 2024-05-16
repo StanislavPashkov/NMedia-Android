@@ -19,14 +19,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
-        val newPostLauncher = registerForActivityResult(NewPostContract){
-            val result = it ?: return@registerForActivityResult
-            viewModel.changeContentAndSave(result)
+
+        val newPostLauncher = registerForActivityResult(NewPostContract) {result ->
+            if (result.isNullOrEmpty()) {
+                viewModel.editCancel()
+                return@registerForActivityResult
+            } else {
+                viewModel.changeContentAndSave(result)
+
+            }
         }
         val adapter = PostsAdapter(object : OnInteractoinListener
             {
                 override fun onLike(post: Post) {
                     viewModel.likeById(post.id)
+
                 }
 
                 override fun onShare(post: Post) {
@@ -43,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onEdit(post: Post) {
+
                     viewModel.edit(post)
                     newPostLauncher.launch(post.content)
                 }

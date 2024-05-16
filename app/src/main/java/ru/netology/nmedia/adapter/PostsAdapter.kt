@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.repository.Calc
+import ru.netology.nmedia.util.Calc
 
 interface OnInteractoinListener {
     fun onLike(post: Post)
