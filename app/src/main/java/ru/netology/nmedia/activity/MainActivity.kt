@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
         val newPostLauncher = registerForActivityResult(NewPostContract){
-            viewModel.editCancel()
             val result = it ?: return@registerForActivityResult
             viewModel.changeContentAndSave(result)
         }
