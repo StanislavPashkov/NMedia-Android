@@ -56,10 +56,10 @@ class PostViewHolder(
 
             if (post.videoURL != "") {
                 group.visibility = View.VISIBLE
-                //content.visibility = View.GONE
                 content.text = post.content
                 tvWatch.text = post.view.toString() + " просмотров"
             } else {
+                tvWatch.visibility = View.GONE
                 group.visibility = View.GONE
                 content.visibility = View.VISIBLE
             }
