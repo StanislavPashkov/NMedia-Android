@@ -113,15 +113,14 @@ class PostRepositoryFilesImpl(private val context: Context) : PostRepository {
     init {
         val file = context.filesDir.resolve(FILE_NAME)
         if (file.exists()) {
-            nextId = posts.maxOfOrNull { it.id }?.inc() ?: 1
             context.openFileInput(FILE_NAME).bufferedReader().use {
                 posts = gson.fromJson(it, typeToken)
-
             }
         } else {
             posts = defaultPosts
         }
         data.value = posts
+        nextId = posts.maxOfOrNull { it.id }?.inc() ?: 1
     }
 
     private fun sync() {
