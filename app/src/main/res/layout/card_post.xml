@@ -145,7 +145,7 @@
         android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="play,imgPlay,tvTitle"
+        app:constraint_referenced_ids="play,imgPlay,tvWatch"
         app:layout_constraintBottom_toTopOf="@id/barrier1"
         app:layout_constraintTop_toBottomOf="@id/content"
 

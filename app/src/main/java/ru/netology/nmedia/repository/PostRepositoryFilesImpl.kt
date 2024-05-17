@@ -109,21 +109,21 @@ class PostRepositoryFilesImpl(private val context: Context) : PostRepository {
 
     private val data = MutableLiveData(posts)
 
+
     init {
         val file = context.filesDir.resolve(FILE_NAME)
+        //nextId = posts.maxOfOrNull { it.id }?.inc() ?:  1
+        //nextId = posts.maxOf { it.id } + 1
         if (file.exists()) {
+            nextId = posts.maxOf { it.id } + 1
             context.openFileInput(FILE_NAME).bufferedReader().use { it ->
                 posts = gson.fromJson(it, typeToken)
-                nextId = posts.maxOfOrNull { it.id }!! + 1
+                //nextId = posts.maxOf { it.id } + 1
             }
-
         } else {
             posts = defaultPosts
-
         }
         data.value = posts
-
-
     }
 
     private fun sync() {
