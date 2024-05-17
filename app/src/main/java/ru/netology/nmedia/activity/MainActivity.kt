@@ -82,26 +82,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-//        viewModel.edited.observe(this){
-//            if (it.id != 0L){
-//                binding.content.setText(it.content)
-//                binding.editText.setText(it.content)
-//                binding.content.focusAndShowKeyboard()
-//                binding.editGroup.visibility = View.VISIBLE
-//            }
-//        }
+
         binding.fab.setOnClickListener {
             viewModel.editCancel()
             newPostLauncher.launch(" ")
         }
 
-//        binding.editCancel.setOnClickListener{
-//            binding.content.setText("")
-//            binding.content.clearFocus()
-//            binding.editGroup.visibility = View.GONE
-//            viewModel.editCancel()
-//            AndroidUtils.hideKeyboard(binding.content)
-//        }
     }
 }
 
