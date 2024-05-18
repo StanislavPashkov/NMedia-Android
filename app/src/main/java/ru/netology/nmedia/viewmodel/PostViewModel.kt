@@ -23,7 +23,7 @@ class PostViewModel (application: Application): AndroidViewModel(application) {
 
     private val repository: PostRepository = PostRepositoryFilesImpl(application)
     val data = repository.getAll()
-    private val edited = MutableLiveData(empty)
+    val edited = MutableLiveData(empty)
     fun likeById(id: Long) = repository.likeById(id)
     fun shareById(id: Long) = repository.shareById(id)
     fun removeById(id: Long) = repository.removeById(id)
@@ -33,6 +33,7 @@ class PostViewModel (application: Application): AndroidViewModel(application) {
     fun playMedia(id: Long) = repository.playMedia(id)
 
     fun changeContentAndSave(text: String) {
+
         edited.value?.let {
             if (it.content != text.trim()) {
                 repository.save(it.copy(content = text))
