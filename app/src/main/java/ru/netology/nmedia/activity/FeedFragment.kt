@@ -32,17 +32,7 @@ class FeedFragment : Fragment() {
             container,
             false
         )
-        //val viewModel: PostViewModel by viewModels()
 
-//        val newPostLauncher = registerForActivityResult(NewPostContract) { result ->
-//            if (result.isNullOrEmpty()) {
-//                viewModel.editCancel()
-//                return@registerForActivityResult
-//            } else {
-//                viewModel.changeContentAndSave(result)
-//
-//            }
-//        }
         val adapter = PostsAdapter(object : OnInteractoinListener {
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
@@ -63,6 +53,8 @@ class FeedFragment : Fragment() {
             }
 
             override fun onEdit(post: Post) {
+                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment,
+                    Bundle().apply { textArg = post.content })
                 viewModel.edit(post)
 
             }
@@ -73,46 +65,29 @@ class FeedFragment : Fragment() {
 
             override fun playMedia(post: Post) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoURL))
-//                    if (intent.resolveActivity(packageManager) != null) {
-//                        startActivity(intent)
-//                    }
+
                 startActivity(intent)
                 viewModel.playMedia(post.id)
                 viewModel.editCancel()
             }
 
             override fun openPost(post: Post) {
-                viewModel.playMedia(post.id)
-                viewModel.editCancel()
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_postSingleFragment,
+                    Bundle().apply { textArg = post.id.toString() }
+                )
             }
-        }
-        )
+        })
 
         binding.list.adapter = adapter
         viewModel.data.observe(viewLifecycleOwner) { posts ->
-            val newPost = posts.size > adapter.currentList.size
-            adapter.submitList(posts) {
-                if (newPost) {
-                    binding.list.smoothScrollToPosition(0)
-                }
-            }
+            adapter.submitList(posts)
         }
 
         binding.fab.setOnClickListener {
             viewModel.editCancel()
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
-        viewModel.edited.observe(viewLifecycleOwner) { post ->
-            if (post.id == 0L) {
-                return@observe
-            }
-            findNavController().navigate(
-                R.id.action_feedFragment_to_newPostFragment,
-                Bundle().apply {
-                    textArg = post.content
-                })
-        }
-
         return binding.root
     }
 }

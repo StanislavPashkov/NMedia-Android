@@ -29,6 +29,7 @@ class PostViewModel (application: Application): AndroidViewModel(application) {
     fun removeById(id: Long) = repository.removeById(id)
     fun edit(post: Post) {
         edited.value = post
+
     }
     fun playMedia(id: Long) = repository.playMedia(id)
 

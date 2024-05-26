@@ -70,6 +70,9 @@ class PostViewHolder(
             share.setOnClickListener {
                 onInteractionListener.onShare(post)
             }
+            content.setOnClickListener {
+                onInteractionListener.openPost(post)
+            }
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
