@@ -11,6 +11,7 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentNewPostBinding
 import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.util.StringArg
+import ru.netology.nmedia.util.focusAndShowKeyboard
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 
@@ -29,7 +30,7 @@ class NewPostFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         val binding = FragmentNewPostBinding.inflate(
             inflater,
             container,
@@ -37,6 +38,7 @@ class NewPostFragment : Fragment() {
         )
         arguments?.textArg
             ?.let(binding.editTextContent::setText)
+
 
         binding.editTextContent.requestFocus()
         binding.save.setOnClickListener {

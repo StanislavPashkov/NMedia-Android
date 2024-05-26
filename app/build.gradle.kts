@@ -54,7 +54,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.7.1")
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
-    implementation("androidx.activity:activity:1.9.0")
+    implementation("com.github.javafaker:javafaker:1.0.2")
 
 
 

@@ -3,6 +3,7 @@ package ru.netology.nmedia.repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.github.javafaker.Faker
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ru.netology.nmedia.dto.Post
@@ -12,6 +13,7 @@ class PostRepositoryFilesImpl(private val context: Context) : PostRepository {
     companion object {
         private const val FILE_NAME = "posts.json"
     }
+    val faker = Faker()
 
     private val gson = Gson()
     private val typeToken = TypeToken.getParameterized(List::class.java, Post::class.java).type
@@ -344,7 +346,7 @@ class PostRepositoryFilesImpl(private val context: Context) : PostRepository {
             listOf(
                 post.copy(
                     id = nextId++,
-                    author = "Me",
+                    author = faker.name().fullName(),
                     likedByMe = false,
                     published = getTime()
                 )
@@ -358,6 +360,7 @@ class PostRepositoryFilesImpl(private val context: Context) : PostRepository {
     }
 
     override fun playMedia(id: Long) {
+
         posts = posts.map {
             if (it.id != id) it else it.copy(view = it.view + 1)
         }
