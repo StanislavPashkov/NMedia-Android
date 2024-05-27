@@ -2,15 +2,17 @@ package ru.netology.nmedia.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.github.javafaker.Faker
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.util.getTime
 
 @Entity
 data class PostEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
-    val author: String,
+    var author: String,
     val content: String,
-    val published: String,
+    var published: String,
     val likes: Int = 0,
     val share: Int = 0,
     val view: Int = 0,
@@ -23,9 +25,9 @@ data class PostEntity(
         fun fromDto(dto: Post) =
             PostEntity(
                 dto.id,
-                dto.author,
+                Faker().name().fullName().also { dto.author = it },
                 dto.content,
-                dto.published,
+                getTime().also { dto.published = it },
                 dto.likes,
                 dto.share,
                 dto.view,

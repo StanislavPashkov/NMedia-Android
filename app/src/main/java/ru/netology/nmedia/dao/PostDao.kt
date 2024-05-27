@@ -1,15 +1,17 @@
 package ru.netology.nmedia.dao
 
-import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.github.javafaker.Faker
 import ru.netology.nmedia.entity.PostEntity
+import ru.netology.nmedia.util.getTime
 
 
 @Dao
-interface PostDao : Parcelable {
+interface PostDao  {
+
     @Query("SELECT * FROM PostEntity ORDER BY id DESC")
     fun getAll(): LiveData<List<PostEntity>>
 
@@ -20,7 +22,15 @@ interface PostDao : Parcelable {
     fun updateContentById(id: Long, content: String)
 
     fun save(post: PostEntity) =
-        if (post.id == 0L) insert(post) else updateContentById(post.id, post.content)
+        if (post.id == 0L) {
+            insert(post)
+
+        } else {
+            updateContentById(
+                post.id,
+                post.content
+            )
+        }
 
     @Query(
         """

@@ -62,7 +62,7 @@ dependencies {
     implementation("androidx.room:room-gradle-plugin:2.6.1")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
-    //ksp("androidx.room:room-compiler:2.6.1")
+
 
 
 
