@@ -54,7 +54,7 @@ class PostViewHolder(
             share.text = Calc.converter(post.share)
             view.text = Calc.converter(post.view)
 
-            if (post.videoURL != "") {
+            if (post.videoURL .isNullOrBlank()) {
                 group.visibility = View.VISIBLE
                 content.text = post.content
                 tvWatch.text = post.view.toString() + " просмотров"

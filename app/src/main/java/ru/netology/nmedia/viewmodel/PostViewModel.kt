@@ -2,6 +2,7 @@ package ru.netology.nmedia.viewmodel
 
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.db.AppDb
@@ -51,6 +52,10 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     fun editCancel() {
         edited.value = empty
+    }
+
+    fun getVideoUrl(post: Post): Uri {
+        return Uri.parse(post.videoURL)
     }
 
 
