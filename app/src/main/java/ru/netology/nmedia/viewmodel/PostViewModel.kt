@@ -53,10 +53,4 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun editCancel() {
         edited.value = empty
     }
-
-    fun getVideoUrl(post: Post): Uri {
-        return Uri.parse(post.videoURL)
-    }
-
-
 }

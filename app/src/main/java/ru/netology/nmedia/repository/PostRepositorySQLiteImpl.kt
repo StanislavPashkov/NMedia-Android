@@ -11,6 +11,7 @@ class PostRepositorySQLiteImpl(
     private var posts = emptyList<Post>()
     private val data = MutableLiveData(posts)
 
+
     init {
         posts = dao.getAll()
         data.value = posts
