@@ -11,13 +11,13 @@
     <EditText
         android:id="@+id/editTextContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:gravity="start|top"
         android:hint="@string/add_post"
         android:inputType="textMultiLine"
         tools:ignore="TouchTargetSizeCheck"
-        android:maxLines="20"/>
+        android:maxLines="16"/>
 
 
     <com.google.android.material.bottomappbar.BottomAppBar
