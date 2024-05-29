@@ -1,3 +1,5 @@
+@file:Suppress("IMPLICIT_CAST_TO_ANY")
+
 package ru.netology.nmedia.dao
 
 import androidx.lifecycle.LiveData
@@ -23,7 +25,9 @@ interface PostDao  {
 
     fun save(post: PostEntity) =
         if (post.id == 0L) {
-            insert(post)
+            insert(post.copy(
+                author = Faker().name().fullName(),
+                published = getTime()))
 
         } else {
             updateContentById(

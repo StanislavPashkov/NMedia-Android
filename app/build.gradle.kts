@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
+    id("com.google.gms.google-services")
 
 }
 
@@ -62,6 +63,9 @@ dependencies {
     implementation("androidx.room:room-gradle-plugin:2.6.1")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+    implementation ("com.google.firebase:firebase-messaging-ktx")
+    implementation ("com.google.android.gms:play-services-base:18.4.0")
 
 
 
