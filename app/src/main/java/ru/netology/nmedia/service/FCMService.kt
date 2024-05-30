@@ -8,7 +8,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.icu.text.Normalizer.NO
+
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -44,12 +44,17 @@ class FCMService : FirebaseMessagingService() {
         println(message)
         message.data[action]?.let {
             try {
-
                 when (Action.valueOf(it)) {
                     Action.LIKE -> handleLike(
                         gson.fromJson(
                             message.data[content],
                             Like::class.java
+                        )
+                    )
+                    Action.POST -> handleNewPost(
+                        gson.fromJson(
+                            message.data[content],
+                            Post::class.java
                         )
                     )
                 }
@@ -89,6 +94,25 @@ class FCMService : FirebaseMessagingService() {
 
         notify(notification)
     }
+    private fun handleNewPost(content: Post) {
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(
+                getString(
+                    R.string.notification_user_new_post,
+                    content.postAuthor,
+                )
+            )
+            .setContentText(
+                content.content
+            )
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText(content.content))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+        notify(notification)
+    }
 
     private fun notify(notification: Notification) {
         if (
@@ -104,7 +128,8 @@ class FCMService : FirebaseMessagingService() {
 }
 
 enum class Action {
-    LIKE
+    LIKE,
+    POST
 }
 
 data class Like(
@@ -112,5 +137,10 @@ data class Like(
     val userName: String,
     val postId: Long,
     val postAuthor: String,
+)
+data class Post(
+    val postId: Long,
+    val postAuthor: String,
+    val content: String,
 )
 

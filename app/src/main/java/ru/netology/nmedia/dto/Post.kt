@@ -11,3 +11,4 @@ data class Post(
     val likedByMe: Boolean = false,
     val videoURL: String,
     )
+
