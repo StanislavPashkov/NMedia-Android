@@ -54,14 +54,15 @@ class PostViewHolder(
             share.text = Calc.converter(post.share)
             view.text = Calc.converter(post.view)
 
-            if (post.videoURL != "") {
-                group.visibility = View.VISIBLE
-                content.text = post.content
-                tvWatch.text = post.view.toString() + " просмотров"
-            } else {
-                group.visibility = View.GONE
-                content.visibility = View.VISIBLE
-            }
+
+//            if (post.videoURL != "") {
+//                group.visibility = View.VISIBLE
+//                content.text = post.content
+//                tvWatch.text = post.view.toString() + " просмотров"
+//            } else {
+//                group.visibility = View.GONE
+//                content.visibility = View.VISIBLE
+//            }
 
             like.setOnClickListener {
                 onInteractionListener.onLike(post)

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="network_error">Network error</string>
+    <string name="retry">retry</string>
+    <string name="there_is_no_posts">There is no posts</string>
+</resources>

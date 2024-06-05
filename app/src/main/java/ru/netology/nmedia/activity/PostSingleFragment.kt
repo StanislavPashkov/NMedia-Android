@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
@@ -16,15 +17,17 @@ import ru.netology.nmedia.databinding.FragmentPostSingleBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.util.StringArg
 import ru.netology.nmedia.viewmodel.PostViewModel
+import java.nio.file.Files.find
 
 class PostSingleFragment : Fragment() {
     companion object {
         var Bundle.textArg: String? by StringArg
     }
 
-    private val viewModel: PostViewModel by viewModels(
-        ownerProducer = ::requireParentFragment
-    )
+    //    private val viewModel: PostViewModel by viewModels(
+//        ownerProducer = ::requireParentFragment
+//    )
+    private val viewModel: PostViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,8 +40,9 @@ class PostSingleFragment : Fragment() {
             false
         )
 
-        viewModel.data.observe(viewLifecycleOwner) { postList ->
-            val post = postList.find { it.id == arguments?.textArg?.toLong() } ?: return@observe
+        viewModel.data.observe(viewLifecycleOwner) { model ->
+            val post = model.posts.find { it.id == arguments?.textArg?.toLong() } ?: return@observe
+
             PostViewHolder(binding.singlePost, object : OnInteractoinListener {
                 override fun onLike(post: Post) {
                     viewModel.likeById(post.id)

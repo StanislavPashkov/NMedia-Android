@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
@@ -18,9 +20,10 @@ import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class FeedFragment : Fragment() {
-    private val viewModel: PostViewModel by viewModels(
-        ownerProducer = ::requireParentFragment
-    )
+    //    private val viewModel: PostViewModel by viewModels(
+//        ownerProducer = ::requireParentFragment
+//    )
+    private val viewModel: PostViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,18 +83,38 @@ class FeedFragment : Fragment() {
         })
 
         binding.list.adapter = adapter
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
-            val newPost = posts.size > adapter.currentList.size
-            adapter.submitList(posts){
+        viewModel.data.observe(viewLifecycleOwner) { model ->
+            val newPost = model.posts.size > adapter.currentList.size
+            binding.errrorGroup.isVisible = model.error
+            binding.emptyState.isVisible = model.empty
+            binding.progress.isVisible = model.loading
+            adapter.submitList(model.posts) {
                 if (newPost) {
                     binding.list.smoothScrollToPosition(0)
                 }
             }
         }
 
+//        viewModel.data.observe(viewLifecycleOwner) { posts ->
+//            val newPost = posts.size > adapter.currentList.size
+//            adapter.submitList(posts){
+//                if (newPost) {
+//                    binding.list.smoothScrollToPosition(0)
+//                }
+//            }
+//        }
+
         binding.fab.setOnClickListener {
-            viewModel.editCancel()
+            //viewModel.editCancel()
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+        }
+        binding.retry.setOnClickListener {
+            viewModel.load()
+        }
+
+        binding.swipe.setOnRefreshListener {
+            viewModel.load()
+            binding.swipe.isRefreshing = false
         }
         return binding.root
     }
