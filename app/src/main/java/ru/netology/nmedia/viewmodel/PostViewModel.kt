@@ -5,7 +5,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.model.FeedModel
 import ru.netology.nmedia.repository.PostRepository
@@ -45,17 +44,16 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun load() {
-        thread {
-            _data.postValue(FeedModel(loading = true))
-            _data.postValue(
-                try {
-                    val posts = repository.getAll()
-                    FeedModel(posts = posts, empty = posts.isEmpty())
-                } catch (e: Exception) {
-                    FeedModel(error = true)
-                }
-            )
-        }
+        _data.postValue(FeedModel(loading = true))
+        repository.getAllAsync(object : PostRepository.Callback<List<Post>> {
+            override fun onSuccess(data: List<Post>) {
+                _data.postValue(FeedModel(posts = data, empty = data.isEmpty()))
+            }
+
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
+        })
     }
 
     val edited = MutableLiveData(empty)
@@ -77,19 +75,20 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
 
     fun removeById(id: Long) {
-        thread {
-            val old = _data.value?.posts.orEmpty()
-            _data.postValue(
-                _data.value?.copy(posts = _data.value?.posts.orEmpty()
-                    .filter { it.id != id }
+        repository.removeById(id, object : PostRepository.Callback<Post> {
+            override fun onSuccess(data: Post) {
+                _data.postValue(_data.value?.copy
+                    (posts = _data.value?.posts.orEmpty().filter {
+                    it.id != id
+                })
                 )
-            )
-            try {
-                repository.removeById(id)
-            } catch (e: IOException) {
-                _data.postValue(_data.value?.copy(posts = old))
+            }
+            override fun onError(e: Exception) {
+                _data.value
             }
         }
+        )
+        load()
     }
 
     fun edit(post: Post) {
@@ -101,16 +100,23 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun changeContentAndSave(content: String) {
-        thread {
-            edited.value?.let {
-                val text = content.trim()
-                if (it.content != text.trim()) {
-                    repository.save(it.copy(content = text))
-                    _postCreated.postValue(Unit)
-                }
+        edited.value?.let {
+            val text = content.trim()
+            if (it.content != text.trim()) {
+                repository.save(it, object : PostRepository.Callback<Post> {
+                    override fun onSuccess(data: Post) {
+                        data.copy(content = text)
+                        _postCreated.postValue(Unit)
+                        edited.postValue(empty)
+                    }
+
+                    override fun onError(e: Exception) {
+                        edited.postValue(empty)
+                    }
+                })
             }
-            edited.postValue(empty)
         }
+        edited.postValue(empty)
     }
 
     fun editCancel() {
