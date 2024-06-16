@@ -39,15 +39,15 @@ class PostRepositoryImpl(
         private val jsonType = "application/json".toMediaType()
     }
 
-    override fun getAll(): List<Post> {
-        val request = Request.Builder()
-            .url("${BASE_URL}api/slow/posts")
-            .build()
-        val response = client.newCall(request)
-            .execute()
-        val responseText = response.body?.string() ?: error("Response body is null")
-        return gson.fromJson(responseText, type)
-    }
+//    override fun getAll(): List<Post> {
+//        val request = Request.Builder()
+//            .url("${BASE_URL}api/slow/posts")
+//            .build()
+//        val response = client.newCall(request)
+//            .execute()
+//        val responseText = response.body?.string() ?: error("Response body is null")
+//        return gson.fromJson(responseText, type)
+//    }
 
     override fun getAllAsync(callback: PostRepository.Callback<List<Post>>) {
         val request = Request.Builder()
@@ -100,7 +100,7 @@ class PostRepositoryImpl(
 //        dao.sharedById(id)
     }
 
-    override fun save(post: Post, callback: PostRepository.Callback<Post>) {
+    override fun save(post: Post, callback: PostRepository.Callback<Post>){
 //        dao.save(PostEntity.fromDto(post))
         val request = Request.Builder()
             .url("${BASE_URL}api/slow/posts")
@@ -116,13 +116,14 @@ class PostRepositoryImpl(
                     override fun onResponse(call: Call, response: Response) {
                         val responseBody = response.body?.string()
                         try {
-                            callback.onSuccess(gson.fromJson(responseBody, type))
+                            callback.onSuccess(gson.fromJson(responseBody, Post::class.java))
                         } catch (e: Exception) {
                             callback.onError(e)
                         }
                     }
                 }
             )
+
     }
 
     override fun playMedia(id: Long) {

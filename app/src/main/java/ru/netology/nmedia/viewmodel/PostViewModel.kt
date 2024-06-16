@@ -98,26 +98,44 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun playMedia(id: Long) {
         repository.playMedia(id)
     }
-
-    fun changeContentAndSave(content: String) {
+    fun save() {
         edited.value?.let {
-            val text = content.trim()
-            if (it.content != text.trim()) {
-                repository.save(it, object : PostRepository.Callback<Post> {
-                    override fun onSuccess(data: Post) {
-                        data.copy(content = text)
+                repository.save(it, object  : PostRepository.Callback<Post> {
+                    override fun onSuccess(post: Post) {
                         _postCreated.postValue(Unit)
                         edited.postValue(empty)
                     }
-
                     override fun onError(e: Exception) {
                         edited.postValue(empty)
                     }
                 })
-            }
         }
-        edited.postValue(empty)
     }
+    fun changeContent(content: String) {
+        val text = content.trim()
+        if (edited.value?.content == text) {
+            return
+        }
+        edited.value = edited.value?.copy(content = text)
+    }
+//    fun changeContentAndSave(content: String) {
+//        edited.value?.let {
+//            val text = content.trim()
+//            if (it.content != text.trim()) {
+//                repository.save(it, object : PostRepository.Callback<Post> {
+//                    override fun onSuccess(data: Post) {
+//                        it.copy(content = text)
+//                        _postCreated.postValue(Unit)
+//                    }
+//
+//                    override fun onError(e: Exception) {
+//                        _data.postValue(FeedModel(error = true))
+//                    }
+//                })
+//            }
+//            edited.value = empty
+//        }
+//    }
 
     fun editCancel() {
         edited.value = empty
