@@ -17,6 +17,7 @@ private val empty = Post(
     id = 0,
     content = "",
     author = "",
+    authorAvatar = "",
     likedByMe = false,
     likes = 0,
     share = 0,
@@ -105,7 +106,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             if (it.content != text.trim()) {
                 repository.save(it, object : PostRepository.Callback<Post> {
                     override fun onSuccess(data: Post) {
-                        data.copy(content = text)
                         _postCreated.postValue(Unit)
                         edited.postValue(empty)
                     }
@@ -113,8 +113,11 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                     override fun onError(e: Exception) {
                         edited.postValue(empty)
                     }
+
                 })
+
             }
+            it.copy(content = text)
         }
         edited.postValue(empty)
     }

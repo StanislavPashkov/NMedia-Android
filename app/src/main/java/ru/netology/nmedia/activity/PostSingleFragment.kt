@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractoinListener
 import ru.netology.nmedia.adapter.PostViewHolder
@@ -40,10 +41,12 @@ class PostSingleFragment : Fragment() {
             false
         )
 
+
         viewModel.data.observe(viewLifecycleOwner) { model ->
             val post = model.posts.find { it.id == arguments?.textArg?.toLong() } ?: return@observe
 
             PostViewHolder(binding.singlePost, object : OnInteractoinListener {
+
                 override fun onLike(post: Post) {
                     viewModel.likeById(post.id)
                 }
