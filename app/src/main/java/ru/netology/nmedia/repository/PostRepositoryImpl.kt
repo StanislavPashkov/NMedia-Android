@@ -49,16 +49,14 @@ class PostRepositoryImpl(private val context: Context
             .getAll()
             .enqueue(object : Callback<List<Post>> {
                 override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
+                    try {
                     if (!response.isSuccessful) {
                         callback.onError(RuntimeException(context.getString(R.string.failed_refresh_news)))
                         return
                     }
                     val body: List<Post> = response.body() ?: throw RuntimeException(
-                        context.getString(
-                            R.string.body_is_null
-                        )
+                        context.getString(R.string.body_is_null)
                     )
-                    try {
                         callback.onSuccess(body)
                     } catch (e: Exception) {
                         callback.onError(e)

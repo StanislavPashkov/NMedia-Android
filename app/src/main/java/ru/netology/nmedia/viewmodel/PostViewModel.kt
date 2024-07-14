@@ -25,12 +25,11 @@ private val empty = Post(
     published = "",
     //videoURL = "",
 
-    )
+)
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: PostRepository = PostRepositoryImpl(application)
-
 
 
     //    val data = repository.getAll()
@@ -44,6 +43,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     private val _error = SingleLiveEvent<String>()
     val error: LiveData<String>
         get() = _error
+
     private fun error(error: String?) {
         error.let {
             _error.postValue(it)
@@ -117,12 +117,10 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         )
         repository.removeById(id, object : PostRepository.NMediaCallback<Unit> {
             override fun onSuccess(data: Unit) {
-                load()
             }
 
             override fun onError(e: Exception) {
                 error(e.message)
-                load()
                 //_data.postValue(_data.value?.copy(error = true))
             }
         })
@@ -138,7 +136,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     fun changeContentAndSave(content: String) {
         val faker = Faker()
-        val post = edited.value?.copy(content = content,author = faker.name().fullName()) ?: return
+        val post = edited.value?.copy(content = content, author = faker.name().fullName()) ?: return
         //repository.save(post)
         repository.save(post, object : PostRepository.NMediaCallback<Post> {
             override fun onSuccess(post: Post) {
