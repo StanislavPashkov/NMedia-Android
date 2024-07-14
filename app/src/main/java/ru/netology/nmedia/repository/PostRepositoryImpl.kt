@@ -10,8 +10,8 @@ import ru.netology.nmedia.api.ApiService
 import ru.netology.nmedia.dto.Post
 
 
-
-class PostRepositoryImpl(private val context: Context
+class PostRepositoryImpl(
+    private val context: Context
     // private val dao: PostDao,
 ) : PostRepository {
 //    private val client = OkHttpClient.Builder()
@@ -50,13 +50,13 @@ class PostRepositoryImpl(private val context: Context
             .enqueue(object : Callback<List<Post>> {
                 override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
                     try {
-                    if (!response.isSuccessful) {
-                        callback.onError(RuntimeException(context.getString(R.string.failed_refresh_news)))
-                        return
-                    }
-                    val body: List<Post> = response.body() ?: throw RuntimeException(
-                        context.getString(R.string.body_is_null)
-                    )
+                        if (!response.isSuccessful) {
+                            callback.onError(RuntimeException(context.getString(R.string.failed_refresh_news)))
+                            return
+                        }
+                        val body: List<Post> = response.body() ?: throw RuntimeException(
+                            context.getString(R.string.body_is_null)
+                        )
                         callback.onSuccess(body)
                     } catch (e: Exception) {
                         callback.onError(e)
@@ -72,14 +72,16 @@ class PostRepositoryImpl(private val context: Context
 
     }
 
-    override fun likeById(id: Long,callback: PostRepository.NMediaCallback<Post>) {
+    override fun likeById(id: Long, callback: PostRepository.NMediaCallback<Post>) {
         ApiService.service.likeById(id)
-            .enqueue(object : Callback<Post>{
+            .enqueue(object : Callback<Post> {
                 override fun onResponse(call: Call<Post>, response: Response<Post>) {
                     if (!response.isSuccessful) {
                         callback.onError(RuntimeException(response.message()))
                     } else {
-                        callback.onSuccess(response.body() ?: throw RuntimeException("body is null"))
+                        callback.onSuccess(
+                            response.body() ?: throw RuntimeException("body is null")
+                        )
                     }
                 }
 
@@ -111,12 +113,14 @@ class PostRepositoryImpl(private val context: Context
 
     override fun dislikeById(id: Long, callback: PostRepository.NMediaCallback<Post>) {
         ApiService.service.dislikeById(id)
-            .enqueue(object : Callback<Post>{
+            .enqueue(object : Callback<Post> {
                 override fun onResponse(call: Call<Post>, response: Response<Post>) {
                     if (!response.isSuccessful) {
                         callback.onError(RuntimeException(response.message()))
                     } else {
-                        callback.onSuccess(response.body() ?: throw RuntimeException("body is null"))
+                        callback.onSuccess(
+                            response.body() ?: throw RuntimeException("body is null")
+                        )
                     }
                 }
 
@@ -131,9 +135,9 @@ class PostRepositoryImpl(private val context: Context
 
     }
 
-    override fun save(post: Post,callback: PostRepository.NMediaCallback<Post>) {
+    override fun save(post: Post, callback: PostRepository.NMediaCallback<Post>) {
         ApiService.service.savePost(post)
-            .enqueue(object : Callback<Post>{
+            .enqueue(object : Callback<Post> {
                 override fun onResponse(call: Call<Post>, response: Response<Post>) {
                     val post = response.body() ?: throw RuntimeException("Invalid")
                     callback.onSuccess(post)
@@ -179,7 +183,7 @@ class PostRepositoryImpl(private val context: Context
                     if (!response.isSuccessful) {
                         callback.onError(RuntimeException(context.getString(R.string.faile_delete_post)))
                         return
-                    }else {
+                    } else {
                         callback.onSuccess(Unit)
                     }
                 }
