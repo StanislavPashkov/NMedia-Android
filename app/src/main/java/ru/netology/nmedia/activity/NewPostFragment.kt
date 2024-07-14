@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -45,9 +46,10 @@ class NewPostFragment : Fragment() {
         binding.editTextContent.requestFocus()
         binding.save.setOnClickListener {
             viewModel.changeContentAndSave(binding.editTextContent.text.toString())
-            AndroidUtils.hideKeyboard(requireView())
+
         }
         viewModel.postCreated.observe(viewLifecycleOwner) {
+            AndroidUtils.hideKeyboard(requireView())
             findNavController().navigate(R.id.action_newPostFragment_to_feedFragment)
             viewModel.load()
         }

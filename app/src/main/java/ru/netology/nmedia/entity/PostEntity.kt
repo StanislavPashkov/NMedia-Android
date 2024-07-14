@@ -18,9 +18,9 @@ data class PostEntity(
     val share: Int = 0,
     val view: Int = 0,
     val likedByMe: Boolean = false,
-    val videoURL: String,
+   // val videoURL: String,
 ) {
-    fun toDto() = Post(id, author, authorAvatar,content, published, likes, share, view, likedByMe, videoURL)
+    //fun toDto() = Post(id, author, authorAvatar,content, published, likes, share, view, likedByMe, videoURL)
 
     companion object {
         fun fromDto(dto: Post) =
@@ -34,7 +34,7 @@ data class PostEntity(
                 dto.share,
                 dto.view,
                 dto.likedByMe,
-                dto.videoURL
+                //dto.videoURL
             )
     }
 }

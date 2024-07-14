@@ -48,7 +48,7 @@ class PostSingleFragment : Fragment() {
             PostViewHolder(binding.singlePost, object : OnInteractoinListener {
 
                 override fun onLike(post: Post) {
-                    viewModel.likeById(post.id)
+                    if (!post.likedByMe) viewModel.likeById(post.id) else viewModel.dislikeById(post.id)
                 }
 
                 override fun onShare(post: Post) {
@@ -79,10 +79,10 @@ class PostSingleFragment : Fragment() {
                 }
 
                 override fun playMedia(post: Post) {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoURL))
-                    startActivity(intent)
-                    viewModel.playMedia(post.id)
-                    viewModel.editCancel()
+//                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoURL))
+//                    startActivity(intent)
+//                    viewModel.playMedia(post.id)
+//                    viewModel.editCancel()
                 }
 
                 override fun openPost(post: Post) {

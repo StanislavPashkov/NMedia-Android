@@ -17,6 +17,10 @@
     <string name="add_post">Добавить пост</string>
     <string name="google_play_unavailable">Google Api Недоступно</string>
     <string name="notification_user_new_post">%1$s опубликовал новый пост</string>
+    <string name="failed_refresh_news">Не удалось обновить ленту новостей</string>
+    <string name="faile_delete_post">Не удалось удалить пост</string>
+    <string name="body_is_null">Пустой ответ</string>
+    <string name="failed_save_post">Не удалось сохранить пост</string>
 
 
     <string name="save">Сохранить</string>

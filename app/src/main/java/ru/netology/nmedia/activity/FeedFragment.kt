@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -40,8 +41,7 @@ class FeedFragment : Fragment() {
 
         val adapter = PostsAdapter(object : OnInteractoinListener {
             override fun onLike(post: Post) {
-                viewModel.likeById(post.id)
-
+                if (!post.likedByMe) viewModel.likeById(post.id) else viewModel.dislikeById(post.id)
             }
 
             override fun onShare(post: Post) {
@@ -69,11 +69,11 @@ class FeedFragment : Fragment() {
             }
 
             override fun playMedia(post: Post) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoURL))
-
-                startActivity(intent)
-                viewModel.playMedia(post.id)
-                viewModel.editCancel()
+//                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoURL))
+//
+//                startActivity(intent)
+//                viewModel.playMedia(post.id)
+//                viewModel.editCancel()
             }
 
             override fun openPost(post: Post) {
@@ -117,6 +117,14 @@ class FeedFragment : Fragment() {
         binding.swipe.setOnRefreshListener {
             viewModel.load()
             binding.swipe.isRefreshing = false
+        }
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            Toast.makeText(
+                context,
+                error,
+                Toast.LENGTH_SHORT
+            )
+                .show()
         }
         return binding.root
     }
