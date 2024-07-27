@@ -28,5 +28,8 @@
     <string name="channel_remote_name">Уведомления с сервера</string>
     <string name="channel_remote_description">Уведомления с удалённого сервера</string>
     <string name="network_error">Network error</string>
+    <string name="retry">Обновить</string>
+    <string name="there_is_no_posts">Постов нет</string>
+    <string name="error_loading">Ошибка при загрузке данных</string>
 
 </resources>

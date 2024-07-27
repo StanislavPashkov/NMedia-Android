@@ -35,7 +35,8 @@
 
     <string name="notification_user_liked">User %1$s liked %2$s\'s post</string>
     <string name="network_error">Network error</string>
-    <string name="retry">retry</string>
+    <string name="retry">Retry</string>
     <string name="there_is_no_posts">There is no posts</string>
+    <string name="error_loading">Error loading data</string>
 
 </resources>
